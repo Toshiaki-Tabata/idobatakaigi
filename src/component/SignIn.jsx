@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -44,17 +44,16 @@ export default function SignIn({setName}) {
   const classes = useStyles();
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputName, setInputName] = useState('');
-  console.log(inputName);
+//  console.log(inputName);
 
 
-  const onChange = (e) => {
-    if (e.target.value === "") {
+  useEffect(() => {
+    if (inputName === "") {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-    setInputName(e.target.value);
-  }
+  }, [inputName]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,7 +72,8 @@ export default function SignIn({setName}) {
             label="ニックネーム"
             name="name"
             autoFocus
-            onChange={onChange}
+            onChange={(e) => {setInputName(e.target.value)}}
+            onKeyDown={(e) => {e.key === "Enter" && e.preventDefault()}}
             value={inputName}
           />
           <Button

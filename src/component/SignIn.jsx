@@ -77,12 +77,13 @@ export default function SignIn({setName}) {
             value={inputName}
           />
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             disabled={isDisabled}
             className={classes.submit}
+            onClick={() => {setName(inputName)}}
           >
             はじめる
           </Button>

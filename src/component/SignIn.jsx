@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -40,12 +40,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({setName}) {
+export const SignIn = ({setName}) => {
   const classes = useStyles();
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputName, setInputName] = useState('');
-//  console.log(inputName);
-
+  const el = useRef(null);
 
   useEffect(() => {
     if (inputName === "") {
@@ -62,8 +61,13 @@ export default function SignIn({setName}) {
         <Typography component="h1" variant="h5">
           ようこそ
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
+        <form className={classes.form} noValidate
+        　onSubmit={e => {
+ 　         setName(inputName);
+
+            e.preventDefault();
+          }}>
+          <TextField ref={el}
             variant="outlined"
             margin="normal"
             required
@@ -72,8 +76,7 @@ export default function SignIn({setName}) {
             label="ニックネーム"
             name="name"
             autoFocus
-            onChange={(e) => {setInputName(e.target.value)}}
-            onKeyDown={(e) => {e.key === "Enter" && e.preventDefault()}}
+            onChange={e => setInputName(e.target.value)}
             value={inputName}
           />
           <Button
@@ -83,7 +86,7 @@ export default function SignIn({setName}) {
             color="primary"
             disabled={isDisabled}
             className={classes.submit}
-            onClick={() => {setName(inputName)}}
+            onClick={() => setName(inputName)}
           >
             はじめる
           </Button>

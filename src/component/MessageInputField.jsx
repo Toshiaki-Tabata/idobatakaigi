@@ -4,6 +4,8 @@ import { makeStyles, Grid, Avatar } from "@material-ui/core";
 import {gravatarPath} from '../gravatar';
 import {MessageField} from './MessageField';
 
+import { pushMessage } from '../firebase';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         gridRow: 2,
@@ -22,7 +24,7 @@ export const MessageInputField = ({name}) => {
 
     const onSubmitData = () => {
         if (text !== '') {
-            console.log('push message to firebase');
+            pushMessage({ name: 'ヤンヤン', text });
             setText('');
         };
     };

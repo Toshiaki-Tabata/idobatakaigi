@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from "@material-ui/core";
+import { List, ListItem } from "@material-ui/core";
 
+import MessageItem from './MessageItem';
 import { messagesRef } from '../firebase';
 
 const useStyles = makeStyles({
     root: {
         gridRow: 1,
+        overflow: 'auto',
+        width: '100%',
     }
 })
 
 // key: -MPWX0E2YyLWn5xAzrpp: value: {name: "ヤンヤン", text: "こんにちは。"}
 // key: -MPWX0E2YyLWn5xAzrpp, name: "ヤンヤン", text: "こんにちは。"}
 
-export const MessageList = () => {
+export const MessageList = ({key, name, text}) => {
     const [messages, setMessages] = useState([]);
     const classes = useStyles();
 
     useEffect(() => {
         messagesRef
         .orderByKey()
-        .limitToLast(3)
+        .limitToLast(15)
         .on('value', (snapshot) => {
             const tempMessages = snapshot.val();
             if (tempMessages == null) return;
@@ -33,7 +37,14 @@ export const MessageList = () => {
         });
     }, []);
     return (
-        <div className={classes.root}>a
-        </div>
+        <List className={classes.root}>
+            {messages !== null && messages.map(message => {
+                return (
+                <>
+                <div>{message.name}</div>
+                <MessageItem key={message.key} name={message.name} text={message.text} />
+                </>
+            )})}
+        </List>
     );
 }

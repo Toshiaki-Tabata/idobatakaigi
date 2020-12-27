@@ -21,7 +21,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // Get a reference to the database service
 const database = firebase.database();
-const messagesRef = database.ref('messages');
+export const messagesRef = database.ref('messages');
 
 export const pushMessage = ({ name, text }) => {
     messagesRef.push({ name, text });

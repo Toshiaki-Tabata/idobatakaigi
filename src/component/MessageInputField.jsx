@@ -3,6 +3,7 @@ import { makeStyles, Grid, Avatar } from "@material-ui/core";
 
 import {gravatarPath} from '../gravatar';
 import {MessageField} from './MessageField';
+import {MessageSubmitButton} from './MessageSubmitButton';
 
 import { pushMessage } from '../firebase';
 
@@ -45,7 +46,7 @@ export const MessageInputField = ({name}) => {
                     <MessageField setText={setText} text={text} name={name} />
                 </Grid>
                 <Grid item xs={1}>
-                    ボタン
+                    <MessageSubmitButton text={text} onSubmit={onSubmitData} />
                 </Grid>
             </Grid>
             </form>

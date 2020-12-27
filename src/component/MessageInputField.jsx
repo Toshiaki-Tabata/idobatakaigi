@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles, Grid, Avatar } from "@material-ui/core";
 
 import {gravatarPath} from '../gravatar';
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const MessageInputField = ({name}) => {
     const [text, setText] = useState('');
+    const inputEl = useRef(null);
     const classes = useStyles();
     const avatarPath = gravatarPath(name);
 
@@ -27,6 +28,7 @@ export const MessageInputField = ({name}) => {
         if (text !== '') {
             pushMessage({ name: 'ヤンヤン', text });
             setText('');
+            inputEl.current.focus();
         };
     };
 
@@ -34,7 +36,6 @@ export const MessageInputField = ({name}) => {
         <div className={classes.root}>
             <form className={classes.form} noValidate
             　  onSubmit={e => {
-    　              setText(text);
                     onSubmitData();
                     e.preventDefault();
                 }}>
@@ -43,7 +44,11 @@ export const MessageInputField = ({name}) => {
                     <Avatar src={avatarPath} />
                 </Grid>
                 <Grid item xs={10}>
-                    <MessageField setText={setText} text={text} name={name} />
+                    <MessageField
+                    inputEl={inputEl}
+                    setText={setText}
+                    text={text}
+                    name={name} />
                 </Grid>
                 <Grid item xs={1}>
                     <MessageSubmitButton text={text} onSubmit={onSubmitData} />

@@ -32,18 +32,19 @@ export const MessageList = ({key, name, text}) => {
                 const [key, nameAndText] = entry;
                 return { key, ...nameAndText };
             });
-            console.log(newMessages);
             setMessages(newMessages);
         });
     }, []);
+
+    const length = messages.length;
+
+
     return (
         <List className={classes.root}>
-            {messages !== null && messages.map(message => {
+            {messages !== null && messages.map((message, index) => {
+                const isLastItem = length === index + 1;
                 return (
-                <>
-                <div>{message.name}</div>
-                <MessageItem key={message.key} name={message.name} text={message.text} />
-                </>
+                <MessageItem isLastItem={isLastItem} key={message.key} name={message.name} text={message.text} />
             )})}
         </List>
     );

@@ -26,7 +26,7 @@ export const MessageInputField = ({name}) => {
 
     const onSubmitData = () => {
         if (text !== '') {
-            pushMessage({ name: 'ヤンヤン', text });
+            pushMessage({ name, text });
             setText('');
             inputEl.current.focus();
         };
